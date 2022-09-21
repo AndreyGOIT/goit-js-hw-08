@@ -5,7 +5,7 @@ import SimpleLightbox from "simplelightbox";
 // Дополнительный импорт стилей
 import "simplelightbox/dist/simple-lightbox.min.css";
 // Change code below this line
-console.log(123);
+
 const gallery = document.querySelector(".gallery");
 
 function createGalleryMarkup(galleryItems) {
