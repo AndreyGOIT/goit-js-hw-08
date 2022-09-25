@@ -52,9 +52,9 @@ player
   });
 // 7. Добавь в проект бибилотеку lodash.throttle и сделай так,
 // чтобы время воспроизведения обновлялось в хранилище не чаще чем раз в секунду.
-// document.addEventListener(
-//   'scroll',
-//   _.throttle(() => {
-//     console.log('Timeupdate handler update every 1000ms');
-//   }, 1000)
-// );
+document.addEventListener(
+  'timeupdate',
+  _.throttle(() => {
+    console.log('Timeupdate handler update every 1000ms');
+  }, 1000)
+);
