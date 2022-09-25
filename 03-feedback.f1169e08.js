@@ -1,0 +1,2 @@
+const t=document.querySelector("input");console.log(t);const e=document.querySelector("textarea");console.log(e),t.addEventListener("input",(function(t){})),e.addEventListener("input",(function(t){}));const o=localStorage.getItem("inputDataEmail"),n=JSON.parse(o);console.log(n);const c=document.querySelector("button");console.log(c),c.addEventListener("click",(function(o){localStorage.clear(),t.textContent="",e.textContent="",console.log(object)}));
+//# sourceMappingURL=03-feedback.f1169e08.js.map

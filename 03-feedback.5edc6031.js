@@ -1,0 +1,2 @@
+!function(){var e=document.querySelector("input");console.log(e);var t=document.querySelector("textarea");console.log(t),e.addEventListener("input",(function(e){})),t.addEventListener("input",(function(e){}));var o=localStorage.getItem("inputDataEmail"),n=JSON.parse(o);console.log(n);var c=document.querySelector("button");console.log(c),c.addEventListener("click",(function(o){localStorage.clear(),e.textContent="",t.textContent="",console.log(object)}))}();
+//# sourceMappingURL=03-feedback.5edc6031.js.map
