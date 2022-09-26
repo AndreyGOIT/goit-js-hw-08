@@ -1,53 +1,46 @@
+import throttle from 'lodash.throttle';
 // 1. Отслеживай на форме событие input, и каждый раз записывай в локальное
 // хранилище объект с полями email и message, в которых сохраняй текущие значения
 // полей формы. Пусть ключом для хранилища будет строка "feedback-form-state".
-const input = document.querySelector('input');
-console.log(input);
-const textArea = document.querySelector('textarea');
-console.log(textArea);
+const refs = {
+  form: document.querySelector('.feedback-form'),
+  textarea: document.querySelector('.feedback-form textarea'),
+};
 
-input.addEventListener('input', inputEmailHandler);
+const STORAGE_KEY = 'feedback-form-state';
 
-function inputEmailHandler(event) {
-  console.log(input.value);
-  //   console.log(event.target.textContent);
-  //   console.log(input.textContent);
-  //сохранение вводимых данных
-  const inputDataEmail = {
-    input: '${input.value}',
-  };
-  localStorage.setItem('inputDataEmail', JSON.stringify(inputDataEmail));
-  return console.log(inputDataEmail);
-}
+refs.form.addEventListener('submit', onFormSubmit);
+refs.textarea.addEventListener('input', throttle(onTextAreaInput, 500));
 
-textArea.addEventListener('input', inputTextAreaHandler);
+populateTextarea();
 
-function inputTextAreaHandler(event) {
-  //сохранение вводимых данных
-  const inputDataText = {
-    input: '${textArea.value}',
-  };
-  localStorage.setItem('inputDataText', JSON.stringify(inputDataText));
-  return console.log(inputDataText);
+function onTextAreaInput(event) {
+  const message = event.target.value;
+
+  localStorage.setItem(STORAGE_KEY, message);
 }
 
 // 2. При загрузке страницы проверяй состояние хранилища, и если там есть сохраненные
 // данные, заполняй ими поля формы.В противном случае поля должны быть пустыми.
-const savedData = localStorage.getItem('inputDataEmail');
-const parsedData = JSON.parse(savedData);
-console.log(parsedData); // data object
+function populateTextarea() {
+  const savedMessage = localStorage.getItem(STORAGE_KEY);
+
+  if (savedMessage) {
+    console.log(savedMessage);
+    refs.textarea.value = savedMessage;
+  }
+}
 
 // 3. При сабмите формы очищай хранилище и поля формы, а также выводи объект с
 // полями email, message и текущими их значениями в консоль.
-const btn = document.querySelector('button');
-console.log(btn);
-btn.addEventListener('click', clickHandler);
+function onFormSubmit(event) {
+  event.preventDefault();
+  console.log('Отправляем форму');
 
-function clickHandler(event) {
-  localStorage.clear();
-  input.textContent = '';
-  textArea.textContent = '';
-  console.log(savedData);
+  event.currentTarget.reset();
+  console.log(localStorage.getItem(STORAGE_KEY));
+  localStorage.removeItem(STORAGE_KEY);
 }
+
 // 4. Сделай так, чтобы хранилище обновлялось не чаще чем раз в 500 миллисекунд.
 // Для этого добавь в проект и используй библиотеку lodash.throttle.
