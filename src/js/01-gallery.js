@@ -20,8 +20,8 @@ function createGalleryMarkup(galleryItems) {
     .join('');
 }
 
-const listEl = document.querySelector('.gallery__item');
-console.log(listEl);
+// const listEl = document.querySelector('.gallery__item');
+// console.log(listEl);
 
 gallery.insertAdjacentHTML('beforeend', createGalleryMarkup(galleryItems));
 
@@ -31,3 +31,15 @@ new SimpleLightbox('.gallery a', {
   animationSpeed: 0,
 });
 console.log(galleryItems);
+
+// const galleryElts = document.querySelectorAll('.gallery__item');
+// console.log(galleryElts);
+// galleryElts.forEach;
+
+const li = document.querySelectorAll('li');
+console.log(li);
+button.style.backgroundColor = 'teal';
+button.style.fontSize = '24px';
+button.style.textAlign = 'center';
+
+console.log(button.style);

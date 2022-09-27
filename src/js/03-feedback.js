@@ -5,32 +5,37 @@ import throttle from 'lodash.throttle';
 const refs = {
   form: document.querySelector('.feedback-form'),
   textarea: document.querySelector('.feedback-form textarea'),
+  email: document.querySelector('.feedback-form input'),
 };
 
 const STORAGE_KEY = 'feedback-form-state';
+const formData = {};
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.textarea.addEventListener('input', throttle(onTextAreaInput, 500));
+refs.textarea.addEventListener('input', throttle(onTextInput, 500));
+refs.email.addEventListener('input', throttle(onTextInput, 500));
 
 populateTextarea();
 
-function onTextAreaInput(event) {
-  const message = event.target.value;
-
-  localStorage.setItem(STORAGE_KEY, message);
+function onTextInput(event) {
+  // console.log((formData[event.target.name] = event.target.value));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 }
 
 // 2. При загрузке страницы проверяй состояние хранилища, и если там есть сохраненные
 // данные, заполняй ими поля формы.В противном случае поля должны быть пустыми.
 function populateTextarea() {
   const savedMessage = localStorage.getItem(STORAGE_KEY);
+  const textMessage = JSON.parse(savedMessage);
+  console.log(textMessage);
+  // const savedMail = localStorage.getItem('feedback-form-mail');
+  // const mailAddress = JSON.parse(savedMail);
 
   if (savedMessage) {
-    console.log(savedMessage);
-    refs.textarea.value = savedMessage;
+    refs.email.value = textMessage.email;
+    refs.textarea.value = textMessage.message;
   }
 }
-
 // 3. При сабмите формы очищай хранилище и поля формы, а также выводи объект с
 // полями email, message и текущими их значениями в консоль.
 function onFormSubmit(event) {
@@ -38,7 +43,7 @@ function onFormSubmit(event) {
   console.log('Отправляем форму');
 
   event.currentTarget.reset();
-  console.log(localStorage.getItem(STORAGE_KEY));
+  console.log(JSON.parse(localStorage.getItem(STORAGE_KEY)));
   localStorage.removeItem(STORAGE_KEY);
 }
 
