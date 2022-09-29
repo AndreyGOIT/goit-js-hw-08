@@ -35,8 +35,10 @@ addEventListener('DOMContentLoaded', currentTime);
 
 function currentTime() {
   const timeForContinue = localStorage.getItem('videoplayer-current-time');
-  console.log(`CurrentTime is ${timeForContinue} sec`);
-  player.setCurrentTime(timeForContinue);
+  if (timeForContinue) {
+    console.log(`CurrentTime is ${timeForContinue} sec`);
+    player.setCurrentTime(timeForContinue);
+  }
 }
 
 // 7. Добавь в проект бибилотеку lodash.throttle и сделай так,

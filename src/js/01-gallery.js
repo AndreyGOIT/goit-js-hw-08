@@ -28,11 +28,3 @@ new SimpleLightbox('.gallery a', {
   animationSpeed: 0,
 });
 console.log(galleryItems);
-
-// const li = document.querySelectorAll('li');
-// console.log(li);
-// button.style.backgroundColor = 'teal';
-// button.style.fontSize = '24px';
-// button.style.textAlign = 'center';
-
-// console.log(button.style);
