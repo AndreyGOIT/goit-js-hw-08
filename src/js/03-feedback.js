@@ -19,6 +19,7 @@ populateTextarea();
 
 function onTextInput(event) {
   // console.log((formData[event.target.name] = event.target.value));
+  formData[event.target.name] = event.target.value;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 }
 
@@ -27,9 +28,6 @@ function onTextInput(event) {
 function populateTextarea() {
   const savedMessage = localStorage.getItem(STORAGE_KEY);
   const textMessage = JSON.parse(savedMessage);
-  console.log(textMessage);
-  // const savedMail = localStorage.getItem('feedback-form-mail');
-  // const mailAddress = JSON.parse(savedMail);
 
   if (savedMessage) {
     refs.email.value = textMessage.email;
