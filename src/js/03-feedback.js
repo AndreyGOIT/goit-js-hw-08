@@ -9,7 +9,9 @@ const refs = {
 };
 
 const STORAGE_KEY = 'feedback-form-state';
-const formData = {};
+const formData = localStorage.getItem(STORAGE_KEY)
+  ? JSON.parse(localStorage.getItem(STORAGE_KEY))
+  : {};
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.textarea.addEventListener('input', throttle(onTextInput, 500));
@@ -26,23 +28,25 @@ function onTextInput(event) {
 // 2. При загрузке страницы проверяй состояние хранилища, и если там есть сохраненные
 // данные, заполняй ими поля формы.В противном случае поля должны быть пустыми.
 function populateTextarea() {
-  const savedMessage = localStorage.getItem(STORAGE_KEY);
-  const textMessage = JSON.parse(savedMessage);
-
+  const savedMessage = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  console.log(savedMessage);
   if (savedMessage) {
-    refs.email.value = textMessage.email;
-    refs.textarea.value = textMessage.message;
+    refs.email.value = savedMessage.email || '';
+    refs.textarea.value = savedMessage.message || '';
   }
 }
+
 // 3. При сабмите формы очищай хранилище и поля формы, а также выводи объект с
 // полями email, message и текущими их значениями в консоль.
 function onFormSubmit(event) {
   event.preventDefault();
-  console.log('Отправляем форму');
 
-  event.currentTarget.reset();
-  console.log(JSON.parse(localStorage.getItem(STORAGE_KEY)));
-  localStorage.removeItem(STORAGE_KEY);
+  if (refs.email.value && refs.textarea.value) {
+    console.log('Отправляем форму');
+    event.currentTarget.reset();
+    console.log(JSON.parse(localStorage.getItem(STORAGE_KEY)));
+    localStorage.removeItem(STORAGE_KEY);
+  }
 }
 
 // 4. Сделай так, чтобы хранилище обновлялось не чаще чем раз в 500 миллисекунд.
